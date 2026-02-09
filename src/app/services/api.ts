@@ -1,38 +1,28 @@
-﻿import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
+﻿import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { ProviderProfile } from "../../features/providers/types";
+import type { UserProfile } from "../../features/users/types";
 
-const providerData: ProviderProfile[] = [
-  {
-    id: "p1",
-    name: "Анастасия Лебедева",
-    role: "UI/UX дизайнер",
-    rating: 4.9,
-    tags: ["figma", "ux research"]
-  },
-  {
-    id: "p2",
-    name: "Дмитрий Корнев",
-    role: "Мастер по ремонту",
-    rating: 4.7,
-    tags: ["электрика", "срочно"]
-  },
-  {
-    id: "p3",
-    name: "Светлана Орлова",
-    role: "Репетитор по английскому",
-    rating: 5.0,
-    tags: ["онлайн", "разговорный"]
-  }
-];
+const apiBaseUrl = "/api";
 
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fakeBaseQuery(),
+  baseQuery: fetchBaseQuery({ baseUrl: apiBaseUrl }),
   endpoints: (builder) => ({
     getProviders: builder.query<ProviderProfile[], void>({
-      queryFn: async () => ({ data: providerData })
+      query: () => "/users",
+      transformResponse: (users: UserProfile[]): ProviderProfile[] =>
+        users.map((user) => ({
+          id: user._id,
+          name: user.username,
+          role: user.role?.[0] ?? "provider",
+          rating: 5,
+          tags: user.role ?? []
+        }))
+    }),
+    getUsers: builder.query<UserProfile[], void>({
+      query: () => "/users"
     })
   })
 });
 
-export const { useGetProvidersQuery } = api;
+export const { useGetProvidersQuery, useLazyGetUsersQuery } = api;

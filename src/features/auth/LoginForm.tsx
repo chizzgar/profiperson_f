@@ -36,7 +36,7 @@ const LoginForm = ({ role }: LoginFormProps) => {
 
   const onSubmit = () => {
     dispatch(setAuthenticated(true));
-    navigate("/providers");
+    navigate(role === "client" ? "/users" : "/providers");
   };
 
   return (
