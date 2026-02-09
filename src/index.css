@@ -192,6 +192,91 @@ body {
   width: fit-content;
 }
 
+.users {
+  display: grid;
+  gap: 16px;
+  width: min(1100px, 100%);
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.users-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.users-header h2 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 36px);
+}
+
+.users-header p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+.user-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.user-card {
+  background: white;
+  border-radius: 20px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 24px rgba(27, 26, 24, 0.06);
+  display: grid;
+  gap: 10px;
+}
+
+.user-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.user-head h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.user-status {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #e6f4f2;
+  color: #1d6a6f;
+}
+
+.user-status.inactive {
+  background: #fbe4e0;
+  color: #a3412a;
+}
+
+.user-meta {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.user-date {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.users-error,
+.users-empty {
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  color: var(--muted);
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;

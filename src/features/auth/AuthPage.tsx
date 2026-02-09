@@ -1,5 +1,6 @@
 ﻿import { useState } from "react";
-import { useAppDispatch } from "../../app/hooks";
+
+import { useAppDispatch } from "@/app/hooks.ts";
 import LoginForm from "./LoginForm";
 import { setRole, type UserRole } from "./authSlice";
 
