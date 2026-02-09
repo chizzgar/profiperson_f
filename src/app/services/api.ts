@@ -1,7 +1,6 @@
-﻿import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { ProviderProfile } from "../../features/providers/types";
-import type { UserProfile } from "../../features/users/types";
-
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { ProviderProfile } from "@/features/providers/types.ts";
+import type { UserProfile } from "@/features/users/types.ts";
 const apiBaseUrl = "/api";
 
 export const api = createApi({
@@ -17,6 +16,7 @@ export const api = createApi({
           role: user.role?.[0] ?? "provider",
           rating: 5,
           tags: user.role ?? []
+
         }))
     }),
     getUsers: builder.query<UserProfile[], void>({
