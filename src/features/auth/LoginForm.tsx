@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch } from "@/app/hooks.ts";
 import { setAuthenticated, UserRole } from "./authSlice";
 
 type LoginFormProps = {
@@ -36,7 +36,7 @@ const LoginForm = ({ role }: LoginFormProps) => {
 
   const onSubmit = () => {
     dispatch(setAuthenticated(true));
-    navigate("/providers");
+    navigate(role === "client" ? "/users" : "/providers");
   };
 
   return (
