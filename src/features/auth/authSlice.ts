@@ -1,6 +1,6 @@
 ﻿import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type UserRole = "client" | "provider" | null;
+export type UserRole = "customer" | "worker" | null;
 
 type AuthState = {
   role: UserRole;

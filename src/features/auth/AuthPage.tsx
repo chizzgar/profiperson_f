@@ -1,4 +1,5 @@
 ﻿import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { useAppDispatch } from "@/app/hooks.ts";
 import LoginForm from "./LoginForm";
@@ -23,20 +24,20 @@ const AuthPage = () => {
           <div className="role-grid">
             <button
               type="button"
-              className={`button ${role === "client" ? "active" : ""}`}
+              className={`button ${role === "customer" ? "active" : ""}`}
               onClick={() => {
-                setRoleState("client");
-                dispatch(setRole("client"));
+                setRoleState("customer");
+                dispatch(setRole("customer"));
               }}
             >
               Заказчик
             </button>
             <button
               type="button"
-              className={`button ${role === "provider" ? "active" : ""}`}
+              className={`button ${role === "worker" ? "active" : ""}`}
               onClick={() => {
-                setRoleState("provider");
-                dispatch(setRole("provider"));
+                setRoleState("worker");
+                dispatch(setRole("worker"));
               }}
             >
               Исполнитель
@@ -44,6 +45,10 @@ const AuthPage = () => {
           </div>
 
           {role ? <LoginForm role={role} /> : null}
+
+          <div className="auth-footer">
+            <Link to="/register">Регистрация</Link>
+          </div>
         </section>
       </div>
     </div>

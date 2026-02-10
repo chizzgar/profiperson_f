@@ -126,9 +126,43 @@ body {
   font-family: inherit;
 }
 
+.field select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  font-family: inherit;
+  background: white;
+}
+
 .field span {
   color: var(--brand);
   font-size: 0.8rem;
+}
+
+.form-error {
+  color: var(--brand);
+  font-size: 0.85rem;
+}
+
+.form-success {
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+.auth-footer {
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.auth-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
 }
 
 .primary {

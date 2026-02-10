@@ -36,13 +36,15 @@ const LoginForm = ({ role }: LoginFormProps) => {
 
   const onSubmit = () => {
     dispatch(setAuthenticated(true));
-    navigate(role === "client" ? "/users" : "/providers");
+    navigate(role === "customer" ? "/users" : "/providers");
   };
+
+  const roleLabel = role === "customer" ? "заказчик" : "исполнитель";
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="field">
-        <label htmlFor="email">Email ({role === "client" ? "заказчик" : "исполнитель"})</label>
+        <label htmlFor="email">Email ({roleLabel})</label>
         <input id="email" type="email" placeholder="name@example.com" {...register("email")} />
         {errors.email ? <span>{errors.email.message}</span> : null}
       </div>
