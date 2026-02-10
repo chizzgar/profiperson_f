@@ -1,9 +1,15 @@
-export type UserProfile = {
+﻿export type UserProfile = {
   _id: string;
   username: string;
   email: string;
-  age: number;
   isActive: boolean;
-  role: string[];
+  role: ("customer" | "worker")[];
   createdAt: string;
+};
+
+export type CreateUserPayload = {
+  username: string;
+  email: string;
+  role: ("customer" | "worker")[];
+  isActive?: boolean;
 };

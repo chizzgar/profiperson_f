@@ -1,5 +1,10 @@
 ﻿import { useGetProvidersQuery } from "../../app/services/api";
 
+const roleLabels: Record<string, string> = {
+  customer: "заказчик",
+  worker: "исполнитель"
+};
+
 const ProvidersPage = () => {
   const { data = [] } = useGetProvidersQuery();
 
@@ -14,7 +19,7 @@ const ProvidersPage = () => {
           {data.map((provider) => (
             <article className="provider-card" key={provider.id}>
               <h3>{provider.name}</h3>
-              <div>{provider.role}</div>
+              <div>{roleLabels[provider.role] ?? provider.role}</div>
               <div className="tag">Рейтинг: {provider.rating}</div>
               <div className="tag">{provider.tags.join(" · ")}</div>
             </article>
