@@ -9,6 +9,8 @@ import { useCreateUserMutation } from "@/app/services/api";
 type FormValues = {
   username: string;
   email: string;
+  password: string;
+  confirmPassword: string;
   role: "customer" | "worker" | "";
 };
 
@@ -18,6 +20,11 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
     .string()
     .email("Введите корректный email")
     .required("Email обязателен"),
+  password: yup.string().required("Пароль обязателен"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "Пароли не совпадают")
+    .required("Подтвердите пароль"),
   role: yup
     .mixed<FormValues["role"]>()
     .oneOf(["customer", "worker"], "Выберите роль")
@@ -48,6 +55,7 @@ const RegisterPage = () => {
       await createUser({
         username: values.username,
         email: values.email,
+        password: values.password,
         role: [values.role],
         isActive: true
       }).unwrap();
@@ -100,6 +108,28 @@ const RegisterPage = () => {
                 <option value="worker">Исполнитель</option>
               </select>
               {errors.role ? <span>{errors.role.message}</span> : null}
+            </div>
+            <div className="field">
+              <label htmlFor="password">Пароль</label>
+              <input
+                id="password"
+                type="password"
+                placeholder="••••••"
+                {...register("password")}
+              />
+              {errors.password ? <span>{errors.password.message}</span> : null}
+            </div>
+            <div className="field">
+              <label htmlFor="confirmPassword">Подтверждение пароля</label>
+              <input
+                id="confirmPassword"
+                type="password"
+                placeholder="••••••"
+                {...register("confirmPassword")}
+              />
+              {errors.confirmPassword ? (
+                <span>{errors.confirmPassword.message}</span>
+              ) : null}
             </div>
             {submitError ? <span className="form-error">{submitError}</span> : null}
             {isSuccess ? (

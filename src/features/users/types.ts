@@ -10,6 +10,7 @@
 export type CreateUserPayload = {
   username: string;
   email: string;
+  password: string;
   role: ("customer" | "worker")[];
   isActive?: boolean;
 };
