@@ -2,14 +2,21 @@
 import type { ProviderProfile } from "@/features/providers/types.ts";
 import type { CreateUserPayload, UserProfile } from "@/features/users/types.ts";
 
-const apiBaseUrl = import.meta.env.DEV
-  ? "/api"
-  : "https://profiperson.onrender.com/api";
+const apiBaseUrl =
+  import.meta.env.VITE_API_URL ??
+  (import.meta.env.DEV ? "http://localhost:3000/api" : "https://profiperson.onrender.com/api");
 
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: apiBaseUrl }),
   endpoints: (builder) => ({
+    login: builder.mutation<{ token?: string }, { email: string; password: string }>({
+      query: (payload) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: payload
+      })
+    }),
     getProviders: builder.query<ProviderProfile[], void>({
       query: () => "/users",
       transformResponse: (users: UserProfile[]): ProviderProfile[] =>
@@ -37,6 +44,7 @@ export const api = createApi({
 });
 
 export const {
+  useLoginMutation,
   useGetProvidersQuery,
   useLazyGetUsersQuery,
   useCreateUserMutation

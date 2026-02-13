@@ -1,8 +1,10 @@
-﻿import { yupResolver } from "@hookform/resolvers/yup";
+﻿import { useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useAppDispatch } from "@/app/hooks.ts";
+import { useLoginMutation } from "@/app/services/api";
 import { setAuthenticated, UserRole } from "./authSlice";
 
 type LoginFormProps = {
@@ -28,15 +30,25 @@ const schema = yup.object({
 const LoginForm = ({ role }: LoginFormProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginMutation();
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<FormValues>({ resolver: yupResolver(schema) });
 
-  const onSubmit = () => {
-    dispatch(setAuthenticated(true));
-    navigate(role === "customer" ? "/users" : "/providers");
+  const onSubmit = async (values: FormValues) => {
+    setSubmitError(null);
+
+    try {
+      await login({ email: values.email, password: values.password }).unwrap();
+      dispatch(setAuthenticated(true));
+      navigate("/users");
+    } catch (error) {
+      console.error("Failed to authenticate:", error);
+      setSubmitError("Неверный email или пароль.");
+    }
   };
 
   const roleLabel = role === "customer" ? "заказчик" : "исполнитель";
@@ -53,7 +65,10 @@ const LoginForm = ({ role }: LoginFormProps) => {
         <input id="password" type="password" placeholder="••••••" {...register("password")} />
         {errors.password ? <span>{errors.password.message}</span> : null}
       </div>
-      <button type="submit" className="primary">Войти</button>
+      {submitError ? <span className="form-error">{submitError}</span> : null}
+      <button type="submit" className="primary" disabled={isLoading}>
+        {isLoading ? "Проверка..." : "Войти"}
+      </button>
     </form>
   );
 };
