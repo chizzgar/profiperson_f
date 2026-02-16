@@ -1,4 +1,4 @@
-﻿import { useGetProvidersQuery } from "../../app/services/api";
+﻿import { useGetProvidersQuery } from "@/app/services/api.ts";
 
 const roleLabels: Record<string, string> = {
   customer: "заказчик",
